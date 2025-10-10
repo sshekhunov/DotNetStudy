@@ -52,3 +52,5 @@ CodeCoverage/
 *.VisualState.xml
 TestResult.xml
 nunit-*.xml
+/Task4-ParallelComputations/.vs
+/Task3-Concurrency/.vs
