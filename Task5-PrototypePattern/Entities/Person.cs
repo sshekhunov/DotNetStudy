@@ -5,7 +5,7 @@ namespace Task5_PrototypePattern.Entities;
 /// <summary>
 /// Базовый класс Персона
 /// </summary>
-public class Person: IMyCloneable<Person>
+public class Person: IMyCloneable<Person>, ICloneable
 {
     public string Name { get; set; }
     public Address HomeAddress { get; set; } 
@@ -28,5 +28,10 @@ public class Person: IMyCloneable<Person>
         clonedPerson.HomeAddress = HomeAddress.MyClone();
 
         return clonedPerson;
+    }
+
+    public object Clone()
+    {
+        return MyClone();
     }
 }
