@@ -54,3 +54,4 @@ TestResult.xml
 nunit-*.xml
 /Task4-ParallelComputations/.vs
 /Task3-Concurrency/.vs
+/Task5-PrototypePattern/.vs
