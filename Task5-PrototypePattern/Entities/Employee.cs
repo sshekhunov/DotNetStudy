@@ -21,6 +21,13 @@ public class Employee : Person
 
     public new Employee MyClone()
     {
-        return new Employee(this);
+        var clonedEmployee = new Employee(this);
+        clonedEmployee.HomeAddress = HomeAddress.MyClone();
+        return clonedEmployee;
+    }
+
+    public new object Clone()
+    {
+        return MyClone();
     }
 }

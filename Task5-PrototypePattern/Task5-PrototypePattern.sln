@@ -5,6 +5,10 @@ VisualStudioVersion = 17.14.36310.24 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task5-PrototypePattern", "Task5-PrototypePattern.csproj", "{B6DE68EB-8D6B-40D9-A53B-DB311ADC0E0D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PrototypeTest", "Tests\PrototypeTest\PrototypeTest.csproj", "{8B5E604E-5B77-4E16-A60C-85FC1B1D2786}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,9 +19,16 @@ Global
 		{B6DE68EB-8D6B-40D9-A53B-DB311ADC0E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6DE68EB-8D6B-40D9-A53B-DB311ADC0E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6DE68EB-8D6B-40D9-A53B-DB311ADC0E0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B5E604E-5B77-4E16-A60C-85FC1B1D2786}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B5E604E-5B77-4E16-A60C-85FC1B1D2786}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B5E604E-5B77-4E16-A60C-85FC1B1D2786}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B5E604E-5B77-4E16-A60C-85FC1B1D2786}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8B5E604E-5B77-4E16-A60C-85FC1B1D2786} = {36D591C7-65C7-A0D1-1CBC-10CDE441BDC8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C38664F4-2F17-4AC4-9919-51B13599774C}

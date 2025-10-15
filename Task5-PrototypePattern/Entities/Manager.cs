@@ -24,8 +24,13 @@ public class Manager : Employee
 
     public new Manager MyClone()
     {
-        return new Manager(this);
+        var clonedManager = new Manager(this);
+        clonedManager.HomeAddress = HomeAddress.MyClone();
+        return clonedManager;
     }
 
-
+    public new object Clone()
+    {
+        return MyClone();
+    }
 }
