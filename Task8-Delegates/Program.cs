@@ -1,5 +1,6 @@
 using Task8_Delegates;
 
+// GetMax
 var people = new[]
 {
     new Person("Анна", 25),
@@ -11,17 +12,21 @@ var oldest = people.GetMax(p => p.Age);
 Console.WriteLine($"Самый старший: {oldest?.Name}, возраст {oldest?.Age}");
 Console.WriteLine();
 
-var searcher = new FileSearcher();
+// FileSearcher 
 var fileCount = 0;
 const int cancelAfterFiles = 10;
+
+var searcher = new FileSearcher();
+using var cts = new CancellationTokenSource();
 
 searcher.FileFound += (sender, args) =>
 {
     Console.WriteLine($"Найден файл: {args.FileName}");
+    fileCount++;
     if (fileCount >= cancelAfterFiles)
     {
         Console.WriteLine($"Отмена поиска после {cancelAfterFiles} файлов.");
-        args.Cancel = true;
+        cts.Cancel();
     }
 };
 
@@ -31,7 +36,11 @@ Console.WriteLine($"Поиск файлов в каталоге: {searchPath}");
 
 try
 {
-    searcher.Search(searchPath);
+    searcher.Search(searchPath, cts.Token);
+}
+catch (OperationCanceledException)
+{
+    Console.WriteLine("Поиск отменён.");
 }
 catch (Exception ex)
 {
