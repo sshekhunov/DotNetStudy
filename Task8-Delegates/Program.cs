@@ -9,5 +9,32 @@ var people = new[]
 
 var oldest = people.GetMax(p => p.Age);
 Console.WriteLine($"Самый старший: {oldest?.Name}, возраст {oldest?.Age}");
+Console.WriteLine();
+
+var searcher = new FileSearcher();
+var fileCount = 0;
+const int cancelAfterFiles = 10;
+
+searcher.FileFound += (sender, args) =>
+{
+    Console.WriteLine($"Найден файл: {args.FileName}");
+    if (fileCount >= cancelAfterFiles)
+    {
+        Console.WriteLine($"Отмена поиска после {cancelAfterFiles} файлов.");
+        args.Cancel = true;
+    }
+};
+
+var searchPath = Directory.GetCurrentDirectory();
+Console.WriteLine($"Поиск файлов в каталоге: {searchPath}");
+
+try
+{
+    searcher.Search(searchPath);
+}
+catch (Exception ex)
+{
+    Console.WriteLine($"Ошибка поиска: {ex.Message}");
+}
 
 record Person(string Name, int Age);
