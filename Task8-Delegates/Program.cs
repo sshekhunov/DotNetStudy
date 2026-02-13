@@ -25,7 +25,8 @@ searcher.FileFound += (sender, args) =>
     }
 };
 
-var searchPath = Directory.GetCurrentDirectory();
+Console.Write("Введите путь к каталогу: ");
+var searchPath = (Console.ReadLine() ?? "").Trim();
 Console.WriteLine($"Поиск файлов в каталоге: {searchPath}");
 
 try

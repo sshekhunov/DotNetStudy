@@ -3,7 +3,6 @@ namespace Task8_Delegates;
 public class FileSearcher
 {
     public event EventHandler<FileArgs>? FileFound;
-    private bool _cancelRequested;
 
     public void Search(string directoryPath)
     {
@@ -11,8 +10,6 @@ public class FileSearcher
         {
             throw new DirectoryNotFoundException($"Каталог не найден: {directoryPath}");
         }
-
-        _cancelRequested = false;
         SearchRecursive(directoryPath);
     }
 
@@ -35,7 +32,6 @@ public class FileSearcher
 
             if (args.Cancel)
             {
-                _cancelRequested = true;
                 return;
             }
         }
@@ -43,8 +39,6 @@ public class FileSearcher
         foreach (var subdir in subdirs)
         {
             SearchRecursive(subdir);
-            if (_cancelRequested)
-                return;
         }
     }
 }
