@@ -4,18 +4,21 @@ public class FileSearcher
 {
     public event EventHandler<FileArgs>? FileFound;
 
-    public void Search(string directoryPath, CancellationToken cancellationToken = default)
+    private bool _cancellationRequested = false;
+
+    public void Search(string directoryPath)
     {
         if (!Directory.Exists(directoryPath))
         {
             throw new DirectoryNotFoundException($"Каталог не найден: {directoryPath}");
         }
-        SearchRecursive(directoryPath, cancellationToken);
+        SearchRecursive(directoryPath);
     }
 
-    private void SearchRecursive(string directoryPath, CancellationToken cancellationToken)
+    private void SearchRecursive(string directoryPath)
     {
-        cancellationToken.ThrowIfCancellationRequested();
+        if (_cancellationRequested)
+            return;
 
         string[] files;
         string[] subdirs;
@@ -25,16 +28,21 @@ public class FileSearcher
 
         foreach (var filePath in files)
         {
-            cancellationToken.ThrowIfCancellationRequested();
-
             var fileInfo = new FileInfo(filePath);
             var args = new FileArgs(fileInfo.Name);
             FileFound?.Invoke(this, args);
+
+            if (args.Cancel)
+            {
+                _cancellationRequested = true;
+                return;
+            }
+
         }
 
         foreach (var subdir in subdirs)
         {
-            SearchRecursive(subdir, cancellationToken);
+            SearchRecursive(subdir);
         }
     }
 }

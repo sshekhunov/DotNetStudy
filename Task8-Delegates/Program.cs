@@ -17,7 +17,6 @@ var fileCount = 0;
 const int cancelAfterFiles = 10;
 
 var searcher = new FileSearcher();
-using var cts = new CancellationTokenSource();
 
 searcher.FileFound += (sender, args) =>
 {
@@ -26,7 +25,7 @@ searcher.FileFound += (sender, args) =>
     if (fileCount >= cancelAfterFiles)
     {
         Console.WriteLine($"Отмена поиска после {cancelAfterFiles} файлов.");
-        cts.Cancel();
+        args.Cancel = true;
     }
 };
 
@@ -36,11 +35,7 @@ Console.WriteLine($"Поиск файлов в каталоге: {searchPath}");
 
 try
 {
-    searcher.Search(searchPath, cts.Token);
-}
-catch (OperationCanceledException)
-{
-    Console.WriteLine("Поиск отменён.");
+    searcher.Search(searchPath);
 }
 catch (Exception ex)
 {

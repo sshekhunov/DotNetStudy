@@ -4,6 +4,9 @@ public static class EnumerableExtensions
 {
     public static T? GetMax<T>(this IEnumerable<T> collection, Func<T, float> convertToNumber) where T : class
     {
+        if (collection == null)
+            throw new ArgumentNullException(nameof(collection));
+
         T? maxItem = null;
         float maxValue = float.NegativeInfinity;
 
