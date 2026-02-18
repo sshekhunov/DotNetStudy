@@ -1,18 +1,42 @@
-﻿namespace Task7_Reflection;
+﻿using System.Reflection;
 
-public class UniversalConverter
+namespace Task7_Reflection;
+
+public class UniversalConverter<T> where T : new()
 {
-    public static string ConvertToString(object obj)
+    public static string ConvertToString(T obj) 
     {
-        Type type = obj.GetType();
-        var propertyValues = type.GetProperties()
-                                 .Select(p => $"{p.Name}={p.GetValue(obj)}")
-                                 .ToList();
+        Type type = obj!.GetType();
 
-        return string.Join(", ", propertyValues);
+        var fields = type.GetFields(BindingFlags.Public | BindingFlags.Instance);
+        var properties = type.GetProperties(BindingFlags.Public | BindingFlags.Instance)
+            .Where(p => p.CanRead && p.CanWrite);
+
+        var members = fields.Cast<MemberInfo>()
+            .Concat(properties)
+            .OrderBy(m => m.Name)
+            .ToArray();
+
+        var values = new string[members.Length];
+        string name = string.Empty;
+
+        for (int i = 0; i < members.Length; i++)
+        {
+            object? value = null;
+
+            if (members[i] is FieldInfo field)
+            {
+                name = field.Name;
+                value = field.GetValue(obj);
+            }
+
+            values[i] = name + "=" + value?.ToString();
+        }
+
+        return string.Join(", ", values);
     }
 
-    public static T ConvertFromString<T>(string data) where T : new()
+    public static T ConvertFromString(string data)
     {
         T obj = new T();
         Type type = typeof(T);

@@ -13,7 +13,7 @@ string result = string.Empty;
 stopwatch.Start();
 for (int i = 0; i < it_count; i++)
 {   
-    result = UniversalConverter.ConvertToString(f);
+    result = UniversalConverter<F>.ConvertToString(f);
 }
 stopwatch.Stop();
 
@@ -33,13 +33,12 @@ Console.WriteLine($"Newtonsoft result: {jsonResult}");
 Console.WriteLine($"Newtonsoft serialization elapsed: {(stopwatch.ElapsedMilliseconds/(float)it_count)} ms");
 
 // UniversalConverter - deserialization
-var ini1 = File.ReadAllText("Example1.ini");
 F? resultObj = null;
 
 stopwatch.Restart();
 for (int i = 0; i < it_count; i++)
 {
-    resultObj = UniversalConverter.ConvertFromString<F>(ini1);
+    resultObj = UniversalConverter<F>.ConvertFromString(result);
 }
 stopwatch.Stop();
 
@@ -47,13 +46,12 @@ Console.WriteLine($"UniversalConverter deserialize elapsed: {(stopwatch.ElapsedM
 
 
 // Newtonsoft.Json - deserialization
-var jsonIni = File.ReadAllText("Example2.ini");
 F? jsonResultObj = null;
 
 stopwatch.Restart();
 for (int i = 0; i < it_count; i++)
 {
-    jsonResultObj = JsonConvert.DeserializeObject<F>(jsonIni)!;
+    jsonResultObj = JsonConvert.DeserializeObject<F>(jsonResult)!;
 }
 stopwatch.Stop();
 
